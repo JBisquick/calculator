@@ -1,6 +1,6 @@
 let firstNumber = 12;
 let secondNumber = 6;
-let operator = '%';
+let operator = '/';
 
 function add(a, b) {
   return a + b;
@@ -26,7 +26,7 @@ function operate(a, b, operator) {
       return subtract(a, b);
     case '*':
       return multiply(a, b);
-    case '%':
+    case '/':
       return divide(a, b);
   }
 };
