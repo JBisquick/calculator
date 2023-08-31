@@ -1,3 +1,7 @@
+let firstNumber = 12;
+let secondNumber = 6;
+let operator = '%';
+
 function add(a, b) {
   return a + b;
 };
@@ -12,4 +16,17 @@ function multiply(a, b) {
 
 function divide(a, b) {
   return a / b;
+};
+
+function operate(a, b, operator) {
+  switch(operator) {
+    case '+':
+      return add(a, b);
+    case '-':
+      return subtract(a, b);
+    case '*':
+      return multiply(a, b);
+    case '%':
+      return divide(a, b);
+  }
 };
