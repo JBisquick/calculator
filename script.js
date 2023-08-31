@@ -8,31 +8,14 @@ let secondNumber = 0;
 let operatorValue = '';
 let displayValue = '';
 
-equals.addEventListener('click', () => {
-  secondNumber = parseFloat(displayValue);
-  lowerDisplay.textContent = operate(firstNumber, secondNumber, operatorValue);
-  higherDisplay.textContent += ` ${secondNumber} =`
-}); 
+equals.addEventListener('click', calculate); 
 
 numbers.forEach((number) => {
-  number.addEventListener('click', () => {
-    // Prevents display number from starting with a 0
-    if (lowerDisplay.textContent === '0' && number.textContent === '0') {
-      lowerDisplay.textContent = '0';
-    } else {
-      displayValue += number.textContent;
-      lowerDisplay.textContent = displayValue;
-    }
-  });
+  number.addEventListener('click', () => {appendNumber(number)});
 });
 
 operators.forEach((operator) => {
-  operator.addEventListener('click', () => {
-    operatorValue = operator.textContent;
-    higherDisplay.textContent = `${displayValue} ${operatorValue}`;
-    firstNumber = parseFloat(displayValue);
-    displayValue = ''
-  });
+  operator.addEventListener('click', () => {AppendOperator(operator)});
 });
 
 function add(a, b) {
@@ -62,4 +45,27 @@ function operate(a, b, operator) {
     case '/':
       return divide(a, b);
   }
+};
+
+function appendNumber(number) {
+  // Prevents display number from starting with a 0
+  if (lowerDisplay.textContent === '0' && number.textContent === '0') {
+    lowerDisplay.textContent = '0';
+  } else {
+    displayValue += number.textContent;
+    lowerDisplay.textContent = displayValue;
+  }
+};
+
+function AppendOperator(operator) {
+  operatorValue = operator.textContent;
+  higherDisplay.textContent = `${displayValue} ${operatorValue}`;
+  firstNumber = parseFloat(displayValue);
+  displayValue = ''
+};
+
+function calculate() {
+  secondNumber = parseFloat(displayValue);
+  lowerDisplay.textContent = operate(firstNumber, secondNumber, operatorValue);
+  higherDisplay.textContent += ` ${secondNumber} =`
 };
