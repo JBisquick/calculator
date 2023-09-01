@@ -56,7 +56,7 @@ function operate(a, b, operator) {
 
 function appendNumber(number) {
   // Prevents display number from starting with a 0
-  if (lowerDisplay.textContent === '0' && number.textContent === '0') {
+  if ((lowerDisplay.textContent === '0' || displayValue === '') && number.textContent === '0') {
     lowerDisplay.textContent = '0';
   } else {
     displayValue += number.textContent;
@@ -86,7 +86,10 @@ function appendOperator(operator) {
 };
 
 function evaluate() {
-  if (solved === true) {
+  if (displayValue === '0' && operatorValue === '/') {
+    alert('You can\'t divide by a negative number!!!');
+    return;
+  } else if (solved === true) {
     return;
   } else if (displayValue != '' && firstNumber != undefined) {
     secondNumber = parseFloat(displayValue);
