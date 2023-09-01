@@ -13,6 +13,7 @@ let operatorValue = '';
 let displayValue = '';
 let solved = false;
 
+window.addEventListener('keydown', keydownInputs)
 equals.addEventListener('click', evaluate); 
 clear.addEventListener('click', clearAll);
 remove.addEventListener('click', reduce);
@@ -20,11 +21,11 @@ negative.addEventListener('click', multiplyNegative);
 decimal.addEventListener('click', addDecimal);
 
 numbers.forEach((number) => {
-  number.addEventListener('click', () => {appendNumber(number)});
+  number.addEventListener('click', () => {appendNumber(number.textContent)});
 });
 
 operators.forEach((operator) => {
-  operator.addEventListener('click', () => {appendOperator(operator)});
+  operator.addEventListener('click', () => {appendOperator(operator.textContent)});
 });
 
 function add(a, b) {
@@ -52,16 +53,20 @@ function operate(a, b, operator) {
     case '*':
       return multiply(a, b);
     case '/':
-      return divide(a, b);
+      if (b === 0) {
+        alert('You can\'t divide by a negative number!!!');
+        return firstNumber;
+      }
+        return divide(a, b);
   }
 };
 
 function appendNumber(number) {
   // Prevents display number from starting with a 0
-  if ((lowerDisplay.textContent === '0' || displayValue === '') && number.textContent === '0') {
+  if ((lowerDisplay.textContent === '0' || displayValue === '') && number === '0') {
     lowerDisplay.textContent = '0';
   } else {
-    displayValue += number.textContent;
+    displayValue += number;
     lowerDisplay.textContent = displayValue;
   }
 };
@@ -73,20 +78,18 @@ function appendOperator(operator) {
   } else if (firstNumber === undefined){
     firstNumber = parseFloat(displayValue);
   } else {
-    if (displayValue === '') {
-      displayValue = 0;
-    }
+    if (displayValue === '') displayValue = 0;
     secondNumber = parseFloat(displayValue);
     firstNumber = operate(firstNumber, secondNumber, operatorValue);
   }
-  operatorValue = operator.textContent;
+  operatorValue = operator;
   higherDisplay.textContent = `${firstNumber} ${operatorValue}`;
   lowerDisplay.textContent = firstNumber;
   displayValue = '';
 };
 
 function evaluate() {
-  if (displayValue === '0' && operatorValue === '/') {
+  if (lowerDisplay.textContent === '0' && operatorValue === '/') {
     alert('You can\'t divide by a negative number!!!');
     return;
   } else if (solved === true) {
@@ -137,4 +140,9 @@ function addDecimal() {
     displayValue += ".";
     lowerDisplay.textContent = displayValue;
   }
+};
+
+function keydownInputs(e) {
+  if (e.key >= 0 && e.key <= 9) appendNumber(e.key);
+  if (e.key === '*' || e.key === '/' || e.key === '+' || e.key === '-') appendOperator(e.key);
 };
