@@ -66,6 +66,9 @@ function appendOperator(operator) {
   } else if (firstNumber === undefined){
     firstNumber = parseFloat(displayValue);
   } else {
+    if (displayValue === '') {
+      displayValue = 0;
+    }
     secondNumber = parseFloat(displayValue);
     firstNumber = operate(firstNumber, secondNumber, operatorValue);
   }
@@ -85,5 +88,5 @@ function evaluate() {
     firstNumber = undefined;
     displayValue = '';
     higherDisplay.textContent = '';
-    lowerDisplay.textContent = '0';
+    lowerDisplay.text = '0';
   };
