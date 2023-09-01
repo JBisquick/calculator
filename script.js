@@ -3,19 +3,21 @@ const lowerDisplay = document.querySelector('#lower');
 const numbers = document.querySelectorAll('.number');
 const operators = document.querySelectorAll('.operator');
 const equals = document.querySelector('#equals');
+const clear = document.querySelector('#clear');
 let firstNumber;
 let secondNumber = 0;
 let operatorValue = '';
 let displayValue = '';
 
-equals.addEventListener('click', calculate); 
+equals.addEventListener('click', evaluate); 
+clear.addEventListener('click', clearAll)
 
 numbers.forEach((number) => {
   number.addEventListener('click', () => {appendNumber(number)});
 });
 
 operators.forEach((operator) => {
-  operator.addEventListener('click', () => {AppendOperator(operator)});
+  operator.addEventListener('click', () => {appendOperator(operator)});
 });
 
 function add(a, b) {
@@ -57,21 +59,31 @@ function appendNumber(number) {
   }
 };
 
-function AppendOperator(operator) {
+function appendOperator(operator) {
   operatorValue = operator.textContent;
-  if (firstNumber === undefined){
+  if (firstNumber === undefined && displayValue === '') {
+    firstNumber = 0;
+  } else if (firstNumber === undefined){
     firstNumber = parseFloat(displayValue);
   } else {
     secondNumber = parseFloat(displayValue);
     firstNumber = operate(firstNumber, secondNumber, operatorValue);
   }
   higherDisplay.textContent = `${firstNumber} ${operatorValue}`;
-  displayValue = ''
-  console.log(firstNumber)
+  lowerDisplay.textContent = firstNumber;
+  displayValue = '';
 };
 
 function evaluate() {
-  secondNumber = parseFloat(displayValue);
-  lowerDisplay.textContent = operate(firstNumber, secondNumber, operatorValue);
-  higherDisplay.textContent += ` ${secondNumber} =`
-};
+  if (displayValue != '' && firstNumber != undefined) {
+    secondNumber = parseFloat(displayValue);
+    lowerDisplay.textContent = operate(firstNumber, secondNumber, operatorValue);
+    higherDisplay.textContent += ` ${secondNumber} =`;
+  }};
+
+  function clearAll() {
+    firstNumber = undefined;
+    displayValue = '';
+    higherDisplay.textContent = '';
+    lowerDisplay.textContent = '0';
+  };
