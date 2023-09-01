@@ -5,6 +5,7 @@ const operators = document.querySelectorAll('.operator');
 const equals = document.querySelector('#equals');
 const clear = document.querySelector('#clear');
 const remove = document.querySelector('#delete');
+const negative = document.querySelector('#negative');
 let firstNumber;
 let secondNumber = 0;
 let operatorValue = '';
@@ -14,6 +15,7 @@ let solved = false;
 equals.addEventListener('click', evaluate); 
 clear.addEventListener('click', clearAll);
 remove.addEventListener('click', reduce);
+negative.addEventListener('click', multiplyNegative);
 
 numbers.forEach((number) => {
   number.addEventListener('click', () => {appendNumber(number)});
@@ -65,6 +67,7 @@ function appendNumber(number) {
 function appendOperator(operator) {
   solved = false;
   operatorValue = operator.textContent;
+
   if (firstNumber === undefined && displayValue === '') {
     firstNumber = 0;
   } else if (firstNumber === undefined){
@@ -76,6 +79,7 @@ function appendOperator(operator) {
     secondNumber = parseFloat(displayValue);
     firstNumber = operate(firstNumber, secondNumber, operatorValue);
   }
+
   higherDisplay.textContent = `${firstNumber} ${operatorValue}`;
   lowerDisplay.textContent = firstNumber;
   displayValue = '';
@@ -89,20 +93,33 @@ function evaluate() {
     lowerDisplay.textContent = operate(firstNumber, secondNumber, operatorValue);
     higherDisplay.textContent += ` ${secondNumber} =`;
     solved = true;
-}};
+  }
+};
 
-  function clearAll() {
-    firstNumber = undefined;
+function clearAll() {
+  firstNumber = undefined;
+  displayValue = '';
+  higherDisplay.textContent = '';
+  lowerDisplay.textContent = '0';
+};
+
+function reduce() {
+  displayValue = displayValue.slice(0, displayValue.length - 1);
+  if (displayValue === '' || displayValue === '-') {
     displayValue = '';
-    higherDisplay.textContent = '';
-    lowerDisplay.textContent = '0';
-    console.log('hi');
-  };
-
-  function reduce() {
-    displayValue = displayValue.slice(0, displayValue.length - 1);
-    if (displayValue === '') {
-      displayValue = '0';
-    } 
+    lowerDisplay.textContent = 0;
+  } else {
     lowerDisplay.textContent = displayValue;
-  };
+  }
+};
+
+function multiplyNegative() {
+  if (displayValue === '' || displayValue === '0') {
+    return;
+  } else if (displayValue.includes('-')) {
+    displayValue = displayValue.slice(1, displayValue.length);
+  } else {
+    displayValue = '-' + displayValue;
+  }
+  lowerDisplay.textContent = displayValue;
+};
