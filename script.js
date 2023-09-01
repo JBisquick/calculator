@@ -4,13 +4,16 @@ const numbers = document.querySelectorAll('.number');
 const operators = document.querySelectorAll('.operator');
 const equals = document.querySelector('#equals');
 const clear = document.querySelector('#clear');
+const remove = document.querySelector('#delete');
 let firstNumber;
 let secondNumber = 0;
 let operatorValue = '';
 let displayValue = '';
+let solved = false;
 
 equals.addEventListener('click', evaluate); 
-clear.addEventListener('click', clearAll)
+clear.addEventListener('click', clearAll);
+remove.addEventListener('click', reduce);
 
 numbers.forEach((number) => {
   number.addEventListener('click', () => {appendNumber(number)});
@@ -60,6 +63,7 @@ function appendNumber(number) {
 };
 
 function appendOperator(operator) {
+  solved = false;
   operatorValue = operator.textContent;
   if (firstNumber === undefined && displayValue === '') {
     firstNumber = 0;
@@ -78,15 +82,27 @@ function appendOperator(operator) {
 };
 
 function evaluate() {
-  if (displayValue != '' && firstNumber != undefined) {
+  if (solved === true) {
+    return;
+  } else if (displayValue != '' && firstNumber != undefined) {
     secondNumber = parseFloat(displayValue);
     lowerDisplay.textContent = operate(firstNumber, secondNumber, operatorValue);
     higherDisplay.textContent += ` ${secondNumber} =`;
-  }};
+    solved = true;
+}};
 
   function clearAll() {
     firstNumber = undefined;
     displayValue = '';
     higherDisplay.textContent = '';
-    lowerDisplay.text = '0';
+    lowerDisplay.textContent = '0';
+    console.log('hi');
+  };
+
+  function reduce() {
+    displayValue = displayValue.slice(0, displayValue.length - 1);
+    if (displayValue === '') {
+      displayValue = '0';
+    } 
+    lowerDisplay.textContent = displayValue;
   };
