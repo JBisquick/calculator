@@ -3,7 +3,7 @@ const lowerDisplay = document.querySelector('#lower');
 const numbers = document.querySelectorAll('.number');
 const operators = document.querySelectorAll('.operator');
 const equals = document.querySelector('#equals');
-let firstNumber = 0;
+let firstNumber;
 let secondNumber = 0;
 let operatorValue = '';
 let displayValue = '';
@@ -59,12 +59,18 @@ function appendNumber(number) {
 
 function AppendOperator(operator) {
   operatorValue = operator.textContent;
-  higherDisplay.textContent = `${displayValue} ${operatorValue}`;
-  firstNumber = parseFloat(displayValue);
+  if (firstNumber === undefined){
+    firstNumber = parseFloat(displayValue);
+  } else {
+    secondNumber = parseFloat(displayValue);
+    firstNumber = operate(firstNumber, secondNumber, operatorValue);
+  }
+  higherDisplay.textContent = `${firstNumber} ${operatorValue}`;
   displayValue = ''
+  console.log(firstNumber)
 };
 
-function calculate() {
+function evaluate() {
   secondNumber = parseFloat(displayValue);
   lowerDisplay.textContent = operate(firstNumber, secondNumber, operatorValue);
   higherDisplay.textContent += ` ${secondNumber} =`
