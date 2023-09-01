@@ -6,6 +6,7 @@ const equals = document.querySelector('#equals');
 const clear = document.querySelector('#clear');
 const remove = document.querySelector('#delete');
 const negative = document.querySelector('#negative');
+const decimal = document.querySelector('#decimal');
 let firstNumber;
 let secondNumber = 0;
 let operatorValue = '';
@@ -16,6 +17,7 @@ equals.addEventListener('click', evaluate);
 clear.addEventListener('click', clearAll);
 remove.addEventListener('click', reduce);
 negative.addEventListener('click', multiplyNegative);
+decimal.addEventListener('click', addDecimal);
 
 numbers.forEach((number) => {
   number.addEventListener('click', () => {appendNumber(number)});
@@ -123,4 +125,16 @@ function multiplyNegative() {
     displayValue = '-' + displayValue;
   }
   lowerDisplay.textContent = displayValue;
+};
+
+function addDecimal() {
+  if (displayValue === '') {
+    displayValue = '0.';
+    lowerDisplay.textContent = displayValue;
+  } else if (displayValue.includes('.')) {
+    return;
+  } else {
+    displayValue += ".";
+    lowerDisplay.textContent = displayValue;
+  }
 };
