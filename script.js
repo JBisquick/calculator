@@ -96,6 +96,7 @@ function evaluate() {
     return;
   } else if (displayValue != '' && firstNumber != undefined) {
     secondNumber = parseFloat(displayValue);
+    displayValue = ''
     lowerDisplay.textContent = operate(firstNumber, secondNumber, operatorValue);
     higherDisplay.textContent += ` ${secondNumber} =`;
     solved = true;
@@ -145,4 +146,9 @@ function addDecimal() {
 function keydownInputs(e) {
   if (e.key >= 0 && e.key <= 9) appendNumber(e.key);
   if (e.key === '*' || e.key === '/' || e.key === '+' || e.key === '-') appendOperator(e.key);
+  if (e.key === 'Enter' || e.key === '=') evaluate();
+  if (e.key === 'c') clearAll();
+  if (e.key === 'd') reduce();
+  if (e.key === 'n') multiplyNegative();
+  if (e.key === '.') addDecimal();
 };
