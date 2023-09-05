@@ -8,10 +8,9 @@ const remove = document.querySelector('#delete');
 const negative = document.querySelector('#negative');
 const decimal = document.querySelector('#decimal');
 let firstNumber;
-let secondNumber = 0;
 let operatorValue = '';
 let displayValue = '';
-let solved = false;
+let solved = true;
 
 window.addEventListener('keydown', keydownInputs)
 equals.addEventListener('click', evaluate); 
@@ -53,11 +52,7 @@ function operate(a, b, operator) {
     case '*':
       return multiply(a, b);
     case '/':
-      if (b === 0) {
-        alert('You can\'t divide by a negative number!!!');
-        return firstNumber;
-      }
-        return divide(a, b);
+      return divide(a, b);
   }
 };
 
@@ -72,35 +67,26 @@ function appendNumber(number) {
 };
 
 function appendOperator(operator) {
-  solved = false;
-  if (firstNumber === undefined && displayValue === '') {
-    firstNumber = 0;
-  } else if (firstNumber === undefined){
-    firstNumber = parseFloat(displayValue);
-  } else {
-    if (displayValue === '') displayValue = 0;
-    secondNumber = parseFloat(displayValue);
-    firstNumber = operate(firstNumber, secondNumber, operatorValue);
-  }
+  if (operatorValue !== '') evaluate();
+  if (displayValue !== '') firstNumber = displayValue;
   operatorValue = operator;
   higherDisplay.textContent = `${firstNumber} ${operatorValue}`;
-  lowerDisplay.textContent = firstNumber;
+  lowerDisplay.textContent = `${firstNumber}`;
   displayValue = '';
+  solved = false;
 };
 
 function evaluate() {
-  if (lowerDisplay.textContent === '0' && operatorValue === '/') {
-    alert('You can\'t divide by a negative number!!!');
+  if ((displayValue === '' || parseFloat(displayValue) === 0) && operatorValue === '/') {
+    alert('You can\'t divide my 0 dummy');
     return;
-  } else if (solved === true) {
-    return;
-  } else if (displayValue != '' && firstNumber != undefined) {
-    secondNumber = parseFloat(displayValue);
-    displayValue = ''
-    lowerDisplay.textContent = operate(firstNumber, secondNumber, operatorValue);
-    higherDisplay.textContent += ` ${secondNumber} =`;
-    solved = true;
   }
+  if (displayValue === '' || solved === true) return;
+  firstNumber = operate(parseFloat(firstNumber), parseFloat(displayValue), operatorValue);
+  higherDisplay.textContent += ` ${displayValue} =`;
+  lowerDisplay.textContent = firstNumber;
+  displayValue = '';
+  solved = true;
 };
 
 function clearAll() {

@@ -1,13 +1,28 @@
 body {
   display: flex;
   flex-direction: column;
+  padding: 15px;
   border: 1px solid black;
+  width: 400px;
+  margin: 50px auto;
+  border-radius: 20px;
+  font-size: 25px;
 }
 
 .container-row {
   display: flex;
-  border: 1px solid black;
   justify-content: space-around;
+  margin: 15px 0;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  width: 75px;
+  height: 60px;
+  border-radius: 10px;
 }
 
 #container  {
@@ -19,4 +34,8 @@ body {
   padding: 20px;
   display: flex;
   flex-direction: column;
+  border: 1px solid black;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  height: 90px;
 }
