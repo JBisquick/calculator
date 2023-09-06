@@ -30,6 +30,12 @@ body {
   border-radius: 10px;
 }
 
+.buttons:hover {
+  cursor: pointer;
+  filter: brightness(1.1);
+  transform: scale(1.05);
+}
+
 .number {
   background-color: lightpink;
 }
