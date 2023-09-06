@@ -134,7 +134,7 @@ function keydownInputs(e) {
   if (e.key === '*' || e.key === '/' || e.key === '+' || e.key === '-') appendOperator(e.key);
   if (e.key === 'Enter' || e.key === '=') evaluate();
   if (e.key === 'c') clearAll();
-  if (e.key === 'd') reduce();
+  if (e.key === 'Backspace') reduce();
   if (e.key === 'n') multiplyNegative();
   if (e.key === '.') addDecimal();
 };
