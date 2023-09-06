@@ -49,9 +49,9 @@ function operate(a, b, operator) {
       return add(a, b);
     case '-':
       return subtract(a, b);
-    case '*':
+    case 'x':
       return multiply(a, b);
-    case '/':
+    case '÷':
       return divide(a, b);
   }
 };
@@ -67,10 +67,10 @@ function appendNumber(number) {
 };
 
 function appendOperator(operator) {
+  operatorValue = operator;
   if (operatorValue !== '') evaluate();
   if (displayValue !== '') firstNumber = displayValue;
   if (firstNumber === undefined) return;
-  operatorValue = operator;
   higherDisplay.textContent = `${firstNumber} ${operatorValue}`;
   lowerDisplay.textContent = `${firstNumber}`;
   displayValue = '';
@@ -78,7 +78,7 @@ function appendOperator(operator) {
 };
 
 function evaluate() {
-  if ((displayValue === '' || parseFloat(displayValue) === 0) && operatorValue === '/') {
+  if ((displayValue === '' || parseFloat(displayValue) === 0) && operatorValue === '÷') {
     alert('You can\'t divide my 0 dummy');
     return;
   }
@@ -132,7 +132,9 @@ function addDecimal() {
 
 function keydownInputs(e) {
   if (e.key >= 0 && e.key <= 9) appendNumber(e.key);
-  if (e.key === '*' || e.key === '/' || e.key === '+' || e.key === '-') appendOperator(e.key);
+  if (e.key === '+' || e.key === '-') appendOperator(e.key);
+  if (e.key === '*') appendOperator('x');
+  if (e.key === '/') appendOperator('÷');
   if (e.key === 'Enter' || e.key === '=') evaluate();
   if (e.key === 'c') clearAll();
   if (e.key === 'Backspace') reduce();
