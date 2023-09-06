@@ -78,8 +78,9 @@ function appendOperator(operator) {
 };
 
 function evaluate() {
-  if ((displayValue === '' || parseFloat(displayValue) === 0) && operatorValue === '÷') {
-    alert('You can\'t divide my 0 dummy');
+  if ((displayValue === '' || parseFloat(displayValue) === 0) && operatorValue === '÷' 
+      && lowerDisplay.textContent === '0') {
+    alert('You can\'t divide by 0 dummy');
     return;
   }
   if (displayValue === '' || solved === true) return;
