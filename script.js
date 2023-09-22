@@ -94,6 +94,8 @@ function evaluate() {
 function clearAll() {
   firstNumber = undefined;
   displayValue = '';
+  operatorValue = '';
+  solved = true;
   higherDisplay.textContent = '';
   lowerDisplay.textContent = '0';
 };
